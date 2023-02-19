@@ -1,25 +1,16 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import MyList from './components/List'
-import { palette } from './helpers/theme'
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import Home from './screens/Home'
+
+const Stack = createNativeStackNavigator()
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <MyList />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} options={{ title: 'Choose' }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: palette.gov.blue.dark,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  list: {
-    color: 'red',
-    backgroundColor: 'blue'
-  }
-})

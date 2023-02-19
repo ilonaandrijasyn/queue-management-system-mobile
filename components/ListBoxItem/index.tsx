@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
     backgroundColor: palette.gov.yellow.main,
-    border: '1 transparent',
     borderRadius: 8
   },
   title: {
