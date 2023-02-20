@@ -4,8 +4,6 @@ import { palette } from '../../helpers/theme'
 import BoxList from '../../components/BoxList'
 import { type NativeStackScreenProps } from '@react-navigation/native-stack'
 import { type RootStackParamList } from '../../App'
-import { setAddress } from '../../store/service/slice'
-import { useAppDispatch } from '../../store/hooks'
 
 const styles = StyleSheet.create({
   container: {
@@ -23,35 +21,30 @@ const styles = StyleSheet.create({
 const data = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Pobocka 1'
+    title: 'Vyzvednuti zasilky'
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Pobocka 2'
+    title: 'Poslani balicku'
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Pobocka 3'
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d472',
-    title: 'Pobocka 4'
+    title: 'Czech point'
   }
 ]
 
-type Props = NativeStackScreenProps<RootStackParamList, 'OfficeAddress'>
+type Props = NativeStackScreenProps<RootStackParamList, 'Service'>
 
-export default function OfficeAddress({ navigation, route }: Props) {
-  const dispatch = useAppDispatch()
-  const officeId = route.params.officeId
-  console.log(officeId)
+export default function Service({ route }: Props) {
+  // TODO is it better to get this from state?
+  const serviceId = route.params.serviceId
+  console.log(serviceId)
   return (
     <View style={styles.container}>
       <BoxList
         data={data}
         onSelectItem={(id: string) => {
-          dispatch(setAddress(id))
-          navigation.navigate('Service', { serviceId: id })
+          console.log('selected', id)
         }}
       />
     </View>
