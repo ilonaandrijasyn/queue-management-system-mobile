@@ -1,6 +1,7 @@
 import React from 'react'
 import { StatusBar, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { palette } from '../../helpers/theme'
+import { type ItemData } from './types'
 
 const styles = StyleSheet.create({
   container: {
@@ -20,14 +21,14 @@ const styles = StyleSheet.create({
   }
 })
 
-interface ItemData {
-  id: string
-  title: string
-}
-
-const ListBoxItem = ({ item, onSelect }: { item: ItemData; onSelect: () => void }) => {
+const ListBoxItem = ({ item, onSelect }: { item: ItemData; onSelect: (id: string) => void }) => {
   return (
-    <TouchableOpacity onPress={onSelect} style={styles.item}>
+    <TouchableOpacity
+      onPress={() => {
+        onSelect(item.id)
+      }}
+      style={styles.item}
+    >
       <Text style={styles.title}>{item.title}</Text>
     </TouchableOpacity>
   )
