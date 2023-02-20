@@ -2,6 +2,10 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import BoxList from '../../components/BoxList'
 import { palette } from '../../helpers/theme'
+import { useAppDispatch } from '../../store/hooks'
+import { setService } from '../../store/service/slice'
+import { type NativeStackScreenProps } from '@react-navigation/native-stack'
+import { type RootStackParamList } from '../../App'
 
 const styles = StyleSheet.create({
   container: {
@@ -51,13 +55,17 @@ const data = [
   }
 ]
 
-export default function Homepage() {
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
+
+export default function Homepage({ navigation }: Props) {
+  const dispatch = useAppDispatch()
   return (
     <View style={styles.container}>
       <BoxList
         data={data}
         onSelectItem={(id: string) => {
-          console.log('selected', id)
+          dispatch(setService(id))
+          navigation.navigate('ServiceAddress', { serviceId: id })
         }}
       />
     </View>
