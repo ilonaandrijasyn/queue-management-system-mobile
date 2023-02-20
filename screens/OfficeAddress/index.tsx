@@ -37,11 +37,11 @@ const data = [
   }
 ]
 
-type Props = NativeStackScreenProps<RootStackParamList, 'ServiceAddress'>
+type Props = NativeStackScreenProps<RootStackParamList, 'OfficeAddress'>
 
-export default function ServiceAddress({ route }: Props) {
-  const serviceId = route.params.serviceId
-  console.log(serviceId)
+export default function OfficeAddress({ route }: Props) {
+  const officeId = route.params.officeId
+  console.log(officeId)
   return (
     <View style={styles.container}>
       <BoxList

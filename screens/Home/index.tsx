@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import BoxList from '../../components/BoxList'
 import { palette } from '../../helpers/theme'
 import { useAppDispatch } from '../../store/hooks'
-import { setService } from '../../store/service/slice'
+import { setOffice } from '../../store/service/slice'
 import { type NativeStackScreenProps } from '@react-navigation/native-stack'
 import { type RootStackParamList } from '../../App'
 
@@ -64,8 +64,8 @@ export default function Homepage({ navigation }: Props) {
       <BoxList
         data={data}
         onSelectItem={(id: string) => {
-          dispatch(setService(id))
-          navigation.navigate('ServiceAddress', { serviceId: id })
+          dispatch(setOffice(id))
+          navigation.navigate('OfficeAddress', { officeId: id })
         }}
       />
     </View>
