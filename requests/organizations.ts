@@ -9,8 +9,7 @@ const officeSchema = z.object({
 const organizationsSchema = z.array(
   z.object({
     id: z.string().uuid(),
-    name: z.string(),
-    offices: z.array(officeSchema)
+    name: z.string()
   })
 )
 

@@ -13,10 +13,6 @@ const styles = StyleSheet.create({
     backgroundColor: palette.gov.blue.dark,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  list: {
-    color: 'red',
-    backgroundColor: 'blue'
   }
 })
 
@@ -39,11 +35,11 @@ const data = [
   }
 ]
 
-type Props = NativeStackScreenProps<RootStackParamList, 'OfficeAddress'>
+type Props = NativeStackScreenProps<RootStackParamList, 'Offices'>
 
-export default function OfficeAddress({ navigation, route }: Props) {
+export default function Offices({ navigation, route }: Props) {
   const dispatch = useAppDispatch()
-  const officeId = route.params.officeId
+  const officeId = route.params.organizationId
   console.log(officeId)
   return (
     <View style={styles.container}>

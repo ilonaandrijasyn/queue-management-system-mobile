@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import BoxList from '../../components/BoxList'
 import { palette } from '../../helpers/theme'
 import { useAppDispatch } from '../../store/hooks'
-import { setOffice } from '../../store/service/slice'
+import { setOrganizationId } from '../../store/service/slice'
 import { type NativeStackScreenProps } from '@react-navigation/native-stack'
 import { type RootStackParamList } from '../../App'
 import { useQuery } from 'react-query'
@@ -26,13 +26,14 @@ export default function Organizations({ navigation }: Props) {
   useQuery('get_organizations', async () => await getOrganizations(), {
     onSuccess: setOrganizations
   })
+
   return (
     <View style={styles.container}>
       <BoxList
         data={organizations}
         onSelectItem={(id: string) => {
-          dispatch(setOffice(id))
-          navigation.navigate('OfficeAddress', { officeId: id })
+          dispatch(setOrganizationId(id))
+          navigation.navigate('Offices', { organizationId: id })
         }}
       />
     </View>
