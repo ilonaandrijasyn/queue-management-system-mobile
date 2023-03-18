@@ -4,6 +4,8 @@ import { palette } from '../../helpers/theme'
 import BoxList from '../../components/BoxList'
 import { type NativeStackScreenProps } from '@react-navigation/native-stack'
 import { type RootStackParamList } from '../../App'
+import { useAppDispatch } from '../../store/hooks'
+import { setService } from '../../store/service/slice'
 
 const styles = StyleSheet.create({
   container: {
@@ -11,10 +13,6 @@ const styles = StyleSheet.create({
     backgroundColor: palette.gov.blue.dark,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  list: {
-    color: 'red',
-    backgroundColor: 'blue'
   }
 })
 
@@ -35,7 +33,8 @@ const data = [
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Service'>
 
-export default function Service({ route }: Props) {
+export default function Service({ route, navigation }: Props) {
+  const dispatch = useAppDispatch()
   // TODO is it better to get this from state?
   const serviceId = route.params.serviceId
   console.log(serviceId)
@@ -44,7 +43,8 @@ export default function Service({ route }: Props) {
       <BoxList
         data={data}
         onSelectItem={(id: string) => {
-          console.log('selected', id)
+          dispatch(setService(id))
+          navigation.navigate('QueueInfo')
         }}
       />
     </View>

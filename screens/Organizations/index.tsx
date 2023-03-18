@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import BoxList from '../../components/BoxList'
 import { palette } from '../../helpers/theme'
@@ -6,6 +6,8 @@ import { useAppDispatch } from '../../store/hooks'
 import { setOffice } from '../../store/service/slice'
 import { type NativeStackScreenProps } from '@react-navigation/native-stack'
 import { type RootStackParamList } from '../../App'
+import { useQuery } from 'react-query'
+import { getOrganizations, type Organizations as OrganizationsType } from '../../requests/organizations'
 
 const styles = StyleSheet.create({
   container: {
@@ -13,56 +15,21 @@ const styles = StyleSheet.create({
     backgroundColor: palette.gov.blue.dark,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  list: {
-    color: 'red',
-    backgroundColor: 'blue'
   }
 })
 
-const data = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Ceska posta'
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Urad'
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Ministerstvo'
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d472',
-    title: 'Ministerstvo'
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d272',
-    title: 'Ministerstvo'
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e296d72',
-    title: 'Ministerstvo'
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e294td72',
-    title: 'Ministerstvo'
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29dr72',
-    title: 'Ministerstvo'
-  }
-]
-
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
 
-export default function Homepage({ navigation }: Props) {
+export default function Organizations({ navigation }: Props) {
   const dispatch = useAppDispatch()
+  const [organizations, setOrganizations] = useState<OrganizationsType>([])
+  useQuery('get_organizations', async () => await getOrganizations(), {
+    onSuccess: setOrganizations
+  })
   return (
     <View style={styles.container}>
       <BoxList
-        data={data}
+        data={organizations}
         onSelectItem={(id: string) => {
           dispatch(setOffice(id))
           navigation.navigate('OfficeAddress', { officeId: id })

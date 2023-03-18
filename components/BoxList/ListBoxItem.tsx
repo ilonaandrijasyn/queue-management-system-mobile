@@ -29,7 +29,7 @@ const ListBoxItem = ({ item, onSelect }: { item: ItemData; onSelect: (id: string
       }}
       style={styles.item}
     >
-      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.title}>{item.name}</Text>
     </TouchableOpacity>
   )
 }
