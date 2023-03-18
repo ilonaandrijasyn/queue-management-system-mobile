@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { palette } from '../../helpers/theme'
 import BoxList from '../../components/BoxList'
 import { type NativeStackScreenProps } from '@react-navigation/native-stack'
 import { type RootStackParamList } from '../../App'
-import { setAddress } from '../../store/service/slice'
 import { useAppDispatch } from '../../store/hooks'
+import { useQuery } from 'react-query'
+import { getOffices } from '../../requests/offices'
+import { setOfficeId } from '../../store/service/slice'
 
 const styles = StyleSheet.create({
   container: {
@@ -16,38 +18,31 @@ const styles = StyleSheet.create({
   }
 })
 
-const data = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Pobocka 1'
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Pobocka 2'
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Pobocka 3'
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d472',
-    title: 'Pobocka 4'
-  }
-]
-
 type Props = NativeStackScreenProps<RootStackParamList, 'Offices'>
+
+interface OfficesI {
+  id: string
+  name: string
+}
 
 export default function Offices({ navigation, route }: Props) {
   const dispatch = useAppDispatch()
-  const officeId = route.params.organizationId
-  console.log(officeId)
+  const organizationId = route.params.organizationId
+  const [offices, setOffices] = useState<OfficesI[]>([])
+  useQuery('get_offices', async () => await getOffices(organizationId), {
+    onSuccess: (response) => {
+      setOffices(response)
+    }
+  })
+
   return (
     <View style={styles.container}>
       <BoxList
-        data={data}
+        data={offices}
         onSelectItem={(id: string) => {
-          dispatch(setAddress(id))
-          navigation.navigate('Service', { serviceId: id })
+          // TODO maybe this is not needed if all vars are passed in props
+          dispatch(setOfficeId(id))
+          navigation.navigate('Service', { organizationId, officeId: id })
         }}
       />
     </View>

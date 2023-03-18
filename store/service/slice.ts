@@ -3,14 +3,14 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 interface ServiceState {
   organizationId: string | null
-  office: string | null
+  officeId: string | null
   address: string | null
   service: string | null
 }
 
 const initialState: ServiceState = {
   organizationId: null,
-  office: null,
+  officeId: null,
   address: null,
   service: null
 }
@@ -22,7 +22,7 @@ export const serviceSlice = createSlice({
     setOrganizationId: (state, action: PayloadAction<string>) => {
       state.organizationId = action.payload
     },
-    setOffice: (state, action: PayloadAction<string>) => {
+    setOfficeId: (state, action: PayloadAction<string>) => {
       state.service = action.payload
     },
     setAddress: (state, action: PayloadAction<string>) => {
@@ -34,6 +34,6 @@ export const serviceSlice = createSlice({
   }
 })
 
-export const { setOrganizationId, setOffice, setAddress, setService } = serviceSlice.actions
+export const { setOrganizationId, setOfficeId, setAddress, setService } = serviceSlice.actions
 
 export default serviceSlice.reducer

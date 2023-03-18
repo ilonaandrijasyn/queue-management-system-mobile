@@ -32,6 +32,7 @@ export default function Organizations({ navigation }: Props) {
       <BoxList
         data={organizations}
         onSelectItem={(id: string) => {
+          // TODO maybe this is not needed if all vars are passed in props
           dispatch(setOrganizationId(id))
           navigation.navigate('Offices', { organizationId: id })
         }}

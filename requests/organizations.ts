@@ -2,10 +2,6 @@ import { axiosInstance } from '../config/axios'
 import { API_URL } from '../helpers/consts'
 import { z } from 'zod'
 
-const officeSchema = z.object({
-  id: z.string().uuid()
-})
-
 const organizationsSchema = z.array(
   z.object({
     id: z.string().uuid(),

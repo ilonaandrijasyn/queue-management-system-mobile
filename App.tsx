@@ -12,7 +12,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 export type RootStackParamList = {
   Home: undefined
   Offices: { organizationId: string }
-  Service: { serviceId: string }
+  Service: { organizationId: string; officeId: string }
   QueueInfo: undefined
 }
 
