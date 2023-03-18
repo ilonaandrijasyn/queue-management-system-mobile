@@ -42,7 +42,7 @@ export default function Offices({ navigation, route }: Props) {
         onSelectItem={(id: string) => {
           // TODO maybe this is not needed if all vars are passed in props
           dispatch(setOfficeId(id))
-          navigation.navigate('Service', { organizationId, officeId: id })
+          navigation.navigate('Services', { organizationId, officeId: id })
         }}
       />
     </View>

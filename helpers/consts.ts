@@ -1,3 +1,5 @@
 export const API_URL = {
-  ORGANIZATIONS: '/organizations'
+  ORGANIZATIONS: '/organizations',
+  OFFICES: '/offices',
+  SERVICES: '/services'
 }

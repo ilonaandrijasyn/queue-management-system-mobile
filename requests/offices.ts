@@ -20,7 +20,7 @@ export type Offices = z.infer<typeof officesSchema>
 
 export const getOffices = async (organizationId: string) => {
   try {
-    const response = await axiosInstance.get(`${API_URL.ORGANIZATIONS}/${organizationId}/offices`)
+    const response = await axiosInstance.get(`${API_URL.ORGANIZATIONS}/${organizationId}${API_URL.OFFICES}`)
     const parsedResponse = officesSchema.safeParse(response.data)
     if (!parsedResponse.success) {
       // TODO save error state to redux

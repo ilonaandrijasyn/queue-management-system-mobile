@@ -5,14 +5,14 @@ import Organizations from './screens/Organizations'
 import { Provider } from 'react-redux'
 import { store } from './store'
 import Offices from './screens/Offices'
-import Service from './screens/Service'
+import Services from './screens/Services'
 import QueueInfo from './screens/QueueInfo'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 export type RootStackParamList = {
   Home: undefined
   Offices: { organizationId: string }
-  Service: { organizationId: string; officeId: string }
+  Services: { organizationId: string; officeId: string }
   QueueInfo: undefined
 }
 
@@ -28,7 +28,7 @@ export default function App() {
           <Stack.Navigator>
             <Stack.Screen name="Home" component={Organizations} options={{ title: 'Choose organization' }} />
             <Stack.Screen name="Offices" component={Offices} options={{ title: 'Choose office' }} />
-            <Stack.Screen name="Service" component={Service} options={{ title: 'Choose service' }} />
+            <Stack.Screen name="Services" component={Services} options={{ title: 'Choose service' }} />
             <Stack.Screen name="QueueInfo" component={QueueInfo} options={{ title: 'Queue info' }} />
           </Stack.Navigator>
         </NavigationContainer>
