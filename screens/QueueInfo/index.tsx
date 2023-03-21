@@ -60,7 +60,6 @@ export default function QueueInfo({ route }: Props) {
     })
 
     return () => {
-      console.log('unmount')
       socket.off(`ON_UPDATE_QUEUE/${officeId}/${serviceId}`)
     }
   }, [])
