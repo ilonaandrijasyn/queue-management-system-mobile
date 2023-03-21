@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { palette } from '../../helpers/theme'
 import { type NativeStackScreenProps } from '@react-navigation/native-stack'
 import { type RootStackParamList } from '../../App'
@@ -7,6 +7,7 @@ import Button from '../../components/Button'
 import { useQuery } from 'react-query'
 import { type Tickets } from '../../types'
 import { getAllTicketsForService } from '../../requests/tickets'
+import TicketsTable from '../../components/TicketsTable'
 
 const styles = StyleSheet.create({
   container: {
@@ -39,11 +40,18 @@ export default function QueueInfo({ route }: Props) {
   })
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{'There is currently x people before you'}</Text>
-      <View style={styles.button}>
-        <Button>{'Generate ticket'}</Button>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.text}>
+          {'There is currently '}
+          {tickets.length}
+          {' people before you'}
+        </Text>
+        <View style={styles.button}>
+          <Button>{'Generate ticket'}</Button>
+        </View>
+        <TicketsTable tickets={tickets} />
       </View>
-    </View>
+    </ScrollView>
   )
 }
