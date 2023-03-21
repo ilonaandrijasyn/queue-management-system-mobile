@@ -3,3 +3,8 @@ export const API_URL = {
   OFFICES: '/offices',
   SERVICES: '/services'
 }
+
+export enum TicketState {
+  CREATED = 'created',
+  PROCESSING = 'processing'
+}

@@ -37,7 +37,7 @@ export default function Services({ route, navigation }: Props) {
         data={services}
         onSelectItem={(id: string) => {
           dispatch(setService(id))
-          navigation.navigate('QueueInfo', { serviceId: id })
+          navigation.navigate('QueueInfo', { officeId, serviceId: id })
         }}
       />
     </View>

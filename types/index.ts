@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { TicketState } from '../helpers/consts'
 
 export const ticketSchema = z.object({
   id: z.string().uuid(),
@@ -6,6 +7,7 @@ export const ticketSchema = z.object({
     id: z.string().uuid(),
     name: z.string()
   }),
+  state: z.nativeEnum(TicketState),
   counter: z.nullable(
     z.object({
       id: z.string().uuid(),
