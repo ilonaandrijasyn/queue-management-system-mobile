@@ -22,7 +22,6 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Services'>
 
 export default function Services({ route, navigation }: Props) {
   const dispatch = useAppDispatch()
-  const organizationId = route.params.organizationId
   const officeId = route.params.officeId
 
   const [services, setServices] = useState<ServicesType>([])
@@ -38,7 +37,7 @@ export default function Services({ route, navigation }: Props) {
         data={services}
         onSelectItem={(id: string) => {
           dispatch(setService(id))
-          navigation.navigate('QueueInfo')
+          navigation.navigate('QueueInfo', { serviceId: id })
         }}
       />
     </View>

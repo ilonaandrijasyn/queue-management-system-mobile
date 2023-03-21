@@ -13,8 +13,8 @@ import { socket, WebsocketProvider } from './contexts/WebsocketContext'
 export type RootStackParamList = {
   Home: undefined
   Offices: { organizationId: string }
-  Services: { organizationId: string; officeId: string }
-  QueueInfo: undefined
+  Services: { officeId: string }
+  QueueInfo: { serviceId: string }
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()

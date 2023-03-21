@@ -1,5 +1,5 @@
 import React, { type PropsWithChildren } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { palette } from '../../helpers/theme'
 
 const styles = StyleSheet.create({
