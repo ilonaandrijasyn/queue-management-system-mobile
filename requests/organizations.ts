@@ -1,6 +1,7 @@
 import { axiosInstance } from '../config/axios'
 import { API_URL } from '../helpers/consts'
 import { z } from 'zod'
+import { generateError } from 'zod-error'
 
 const organizationsSchema = z.array(
   z.object({
@@ -12,16 +13,12 @@ const organizationsSchema = z.array(
 export type Organizations = z.infer<typeof organizationsSchema>
 
 export const getOrganizations = async () => {
-  try {
-    const response = await axiosInstance.get(API_URL.ORGANIZATIONS)
-    const parsedResponse = organizationsSchema.safeParse(response.data)
-    if (!parsedResponse.success) {
-      // TODO save error state to redux
-      return null
-    }
-    return parsedResponse.data
-  } catch (e) {
-    // TODO save error to redux
-    return null
+  const response = await axiosInstance.get(API_URL.ORGANIZATIONS)
+  const parsedResponse = organizationsSchema.safeParse(response.data)
+  if (!parsedResponse.success) {
+    const e = generateError(parsedResponse.error)
+    console.error(e.message)
+    throw e
   }
+  return parsedResponse.data
 }
