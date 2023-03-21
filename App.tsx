@@ -8,6 +8,7 @@ import Offices from './screens/Offices'
 import Services from './screens/Services'
 import QueueInfo from './screens/QueueInfo'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { socket, WebsocketProvider } from './contexts/WebsocketContext'
 
 export type RootStackParamList = {
   Home: undefined
@@ -22,17 +23,19 @@ const queryClient = new QueryClient()
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name="Home" component={Organizations} options={{ title: 'Choose organization' }} />
-            <Stack.Screen name="Offices" component={Offices} options={{ title: 'Choose office' }} />
-            <Stack.Screen name="Services" component={Services} options={{ title: 'Choose service' }} />
-            <Stack.Screen name="QueueInfo" component={QueueInfo} options={{ title: 'Queue info' }} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </QueryClientProvider>
-    </Provider>
+    <WebsocketProvider value={socket}>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen name="Home" component={Organizations} options={{ title: 'Choose organization' }} />
+              <Stack.Screen name="Offices" component={Offices} options={{ title: 'Choose office' }} />
+              <Stack.Screen name="Services" component={Services} options={{ title: 'Choose service' }} />
+              <Stack.Screen name="QueueInfo" component={QueueInfo} options={{ title: 'Queue info' }} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </QueryClientProvider>
+      </Provider>
+    </WebsocketProvider>
   )
 }
