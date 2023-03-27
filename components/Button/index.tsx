@@ -14,14 +14,9 @@ const styles = StyleSheet.create({
   }
 })
 
-const Button = ({ children }: PropsWithChildren) => {
+const Button = ({ onPress, children }: { onPress: () => void } & PropsWithChildren) => {
   return (
-    <TouchableOpacity
-      style={styles.button}
-      onPress={() => {
-        console.log('clicked button')
-      }}
-    >
+    <TouchableOpacity style={styles.button} onPress={onPress}>
       <Text style={styles.text}>{children}</Text>
     </TouchableOpacity>
   )

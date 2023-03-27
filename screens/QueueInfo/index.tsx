@@ -3,23 +3,21 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { palette } from '../../helpers/theme'
 import { type NativeStackScreenProps } from '@react-navigation/native-stack'
 import { type RootStackParamList } from '../../App'
-import Button from '../../components/Button'
 import { useQuery } from 'react-query'
 import { type Tickets, ticketSchema } from '../../types'
 import { getAllTicketsForService } from '../../requests/tickets'
 import TicketsTable from '../../components/TicketsTable'
 import { WebsocketContext } from '../../contexts/WebsocketContext'
 import { TicketState } from '../../helpers/consts'
+import Ticket from '../../components/Ticket'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: palette.gov.grey.background,
-    alignItems: 'center'
+    backgroundColor: palette.gov.grey.background
   },
-  button: {
-    flex: 0.5,
-    justifyContent: 'center'
+  info: {
+    paddingLeft: 24
   },
   text: {
     // TODO maybe set this globally
@@ -67,13 +65,12 @@ export default function QueueInfo({ route }: Props) {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.text}>
-          {'There is currently '}
-          {tickets.length}
-          {' people before you'}
-        </Text>
-        <View style={styles.button}>
-          <Button>{'Generate ticket'}</Button>
+        <View style={styles.info}>
+          <Text style={styles.text}>
+            {'Počet čekajících:'}
+            {tickets.length}
+          </Text>
+          <Ticket serviceId={serviceId} />
         </View>
         <TicketsTable tickets={tickets} />
       </View>
