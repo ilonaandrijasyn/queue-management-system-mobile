@@ -2,6 +2,17 @@ import React from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { createTicket, getMyTicketsCount } from '../requests/tickets'
 import Button from './Button'
+import Typography from './Typography'
+import { StyleSheet, View } from 'react-native'
+import { palette } from '../helpers/theme'
+
+const styles = StyleSheet.create({
+  limitError: {
+    color: palette.gov.error.main,
+    fontWeight: 'bold',
+    marginBottom: 8
+  }
+})
 
 interface TicketProps {
   serviceId: string
@@ -22,9 +33,18 @@ export default function GenerateTicketButton({ serviceId }: TicketProps) {
     mutationCreateTicket.mutate(serviceId)
   }
 
+  const reachedLimit = data === 5
+
   return (
-    <Button disabled={isLoading || isIdle || isError || data === 5} onPress={handleGenerateTicketPress}>
-      {'Vygenerovat lístek'}
-    </Button>
+    <View>
+      {reachedLimit && (
+        <Typography variant="body" otherStyles={styles.limitError}>
+          Můžete si vygenerovat maximálně 5 lístků.
+        </Typography>
+      )}
+      <Button disabled={isLoading || isIdle || isError || reachedLimit} onPress={handleGenerateTicketPress}>
+        {'Vygenerovat lístek'}
+      </Button>
+    </View>
   )
 }
