@@ -14,12 +14,24 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 36,
     color: palette.gov.grey.dark
+  },
+  disabled: {
+    opacity: 0.5
   }
 })
 
-const Button = ({ onPress, children }: { onPress: () => void } & PropsWithChildren) => {
+interface ButtonProps {
+  onPress: () => void
+  disabled?: boolean
+}
+
+const Button = ({ onPress, disabled = false, children }: ButtonProps & PropsWithChildren) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity
+      disabled={disabled}
+      style={[styles.button, ...(disabled ? [styles.disabled] : [])]}
+      onPress={onPress}
+    >
       <Typography variant="h2" otherStyles={styles.text}>
         {children}
       </Typography>
