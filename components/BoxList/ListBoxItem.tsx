@@ -1,7 +1,8 @@
 import React from 'react'
-import { StatusBar, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StatusBar, StyleSheet, TouchableOpacity } from 'react-native'
 import { palette } from '../../helpers/theme'
 import { type ItemData } from './types'
+import Typography from '../Typography'
 
 const styles = StyleSheet.create({
   container: {
@@ -16,7 +17,6 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   title: {
-    fontSize: 32,
     color: palette.gov.grey.dark
   }
 })
@@ -29,7 +29,9 @@ const ListBoxItem = ({ item, onSelect }: { item: ItemData; onSelect: (id: string
       }}
       style={styles.item}
     >
-      <Text style={styles.title}>{item.name}</Text>
+      <Typography variant="h2" otherStyles={styles.title}>
+        {item.name}
+      </Typography>
     </TouchableOpacity>
   )
 }

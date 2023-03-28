@@ -1,29 +1,22 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import Button from './Button'
+import { StyleSheet, View } from 'react-native'
+import Button from '../Button'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { createTicket, getMyTicket } from '../requests/tickets'
+import { createTicket, getMyTicket } from '../../requests/tickets'
+import Typography from '../Typography'
 
 const styles = StyleSheet.create({
-  button: {
-    flex: 0.5,
-    justifyContent: 'center'
-  },
-  text: {
-    fontSize: 24
-  },
   ticketId: {
     marginTop: 8,
-    fontSize: 24,
     fontWeight: 'bold'
   }
 })
 
-interface TicketInterface {
+interface TicketProps {
   serviceId: string
 }
 
-export default function Ticket({ serviceId }: TicketInterface) {
+export default function Ticket({ serviceId }: TicketProps) {
   const queryClient = useQueryClient()
 
   const { isLoading, isFetching, isError, isIdle, data } = useQuery(
@@ -38,11 +31,11 @@ export default function Ticket({ serviceId }: TicketInterface) {
   })
 
   if (isLoading || isFetching || isIdle) {
-    return <Text>Načítám...</Text>
+    return <Typography variant="h2">Načítám...</Typography>
   }
 
   if (isError) {
-    return <Text>Chyba</Text>
+    return <Typography variant="h2">Chyba</Typography>
   }
 
   const handleGenerateTicketPress = () => {
@@ -50,13 +43,13 @@ export default function Ticket({ serviceId }: TicketInterface) {
   }
 
   return data === null ? (
-    <View style={styles.button}>
-      <Button onPress={handleGenerateTicketPress}>{'Vygenerovat lístek'}</Button>
-    </View>
+    <Button onPress={handleGenerateTicketPress}>{'Vygenerovat lístek'}</Button>
   ) : (
     <View>
-      <Text style={styles.text}>{'Můj lístek:'}</Text>
-      <Text style={styles.ticketId}>{data.id}</Text>
+      <Typography variant="h2">{'Můj lístek:'}</Typography>
+      <Typography variant="h2" otherStyles={styles.ticketId}>
+        {data.id}
+      </Typography>
     </View>
   )
 }

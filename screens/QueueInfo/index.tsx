@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { palette } from '../../helpers/theme'
 import { type NativeStackScreenProps } from '@react-navigation/native-stack'
 import { type RootStackParamList } from '../../App'
@@ -10,6 +10,7 @@ import TicketsTable from '../../components/TicketsTable'
 import { WebsocketContext } from '../../contexts/WebsocketContext'
 import { TicketState } from '../../helpers/consts'
 import Ticket from '../../components/Ticket'
+import Typography from '../../components/Typography'
 
 const styles = StyleSheet.create({
   container: {
@@ -17,12 +18,15 @@ const styles = StyleSheet.create({
     backgroundColor: palette.gov.grey.background
   },
   info: {
-    paddingLeft: 24
+    paddingLeft: 24,
+    paddingRight: 24
   },
   text: {
-    // TODO maybe set this globally
-    fontSize: 16,
-    paddingTop: 50
+    paddingTop: 24
+  },
+  ticketsNumber: {
+    fontWeight: 'bold',
+    marginBottom: 48
   }
 })
 
@@ -66,10 +70,12 @@ export default function QueueInfo({ route }: Props) {
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.info}>
-          <Text style={styles.text}>
+          <Typography variant="h2" otherStyles={styles.text}>
             {'Počet čekajících:'}
+          </Typography>
+          <Typography variant="h2" otherStyles={styles.ticketsNumber}>
             {tickets.length}
-          </Text>
+          </Typography>
           <Ticket serviceId={serviceId} />
         </View>
         <TicketsTable tickets={tickets} />
