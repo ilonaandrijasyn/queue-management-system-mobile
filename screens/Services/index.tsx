@@ -25,7 +25,7 @@ export default function Services({ route, navigation }: Props) {
   const officeId = route.params.officeId
 
   const [services, setServices] = useState<ServicesType>([])
-  useQuery('get_offices', async () => await getServices(officeId), {
+  useQuery('get_services', async () => await getServices(officeId), {
     onSuccess: (response) => {
       setServices(response)
     }
