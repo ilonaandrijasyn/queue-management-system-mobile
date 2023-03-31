@@ -36,7 +36,7 @@ export default function Ticket({ serviceId }: TicketProps) {
     <View>
       <Typography variant="h2">{'Můj lístek:'}</Typography>
       <Typography variant="h2" otherStyles={styles.ticketId}>
-        {data.id}
+        {data.ticketNumber}
       </Typography>
     </View>
   )

@@ -3,6 +3,7 @@ import { TicketState } from '../helpers/consts'
 
 export const ticketSchema = z.object({
   id: z.string().uuid(),
+  ticketNumber: z.number(),
   service: z.object({
     id: z.string().uuid(),
     name: z.string()
