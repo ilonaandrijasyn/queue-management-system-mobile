@@ -11,7 +11,7 @@ const officeSchema = z.object({
   building: z.nullable(z.string()),
   city: z.string(),
   postCode: z.string(),
-  country: z.string()
+  countryCode: z.string()
 })
 
 const officesSchema = z.array(officeSchema)
