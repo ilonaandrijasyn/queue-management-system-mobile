@@ -5,7 +5,7 @@ import { type NativeStackScreenProps } from '@react-navigation/native-stack'
 import { type RootStackParamList } from '../../App'
 import { useQuery } from 'react-query'
 import { type Tickets, ticketSchema } from '../../types'
-import { getAllTicketsForService } from '../../requests/tickets'
+import { getAllTicketsForService, getMyTicket } from '../../requests/tickets'
 import TicketsTable from '../../components/TicketsTable'
 import { WebsocketContext } from '../../contexts/WebsocketContext'
 import { TicketState } from '../../helpers/consts'
@@ -66,17 +66,44 @@ export default function QueueInfo({ route }: Props) {
     }
   }, [])
 
+  const {
+    isLoading: isLoadingMyTicket,
+    isFetching: isFetchingMyTicket,
+    isError: isErrorMyTicket,
+    isIdle: isIdleMyTicket,
+    data: myTicket
+  } = useQuery('get_my_ticket', async () => await getMyTicket(serviceId))
+
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.info}>
-          <Typography variant="h2" otherStyles={styles.text}>
-            {'Počet čekajících:'}
-          </Typography>
-          <Typography variant="h2" otherStyles={styles.ticketsNumber}>
-            {tickets.length}
-          </Typography>
-          <Ticket serviceId={serviceId} />
+          {myTicket === null || myTicket === undefined ? (
+            <>
+              <Typography variant="h2" otherStyles={styles.text}>
+                {'Počet čekajících:'}
+              </Typography>
+              <Typography variant="h2" otherStyles={styles.ticketsNumber}>
+                {tickets.length}
+              </Typography>
+            </>
+          ) : (
+            <>
+              <Typography variant="h2" otherStyles={styles.text}>
+                {'Lidí přede mnou:'}
+              </Typography>
+              <Typography variant="h2" otherStyles={styles.ticketsNumber}>
+                {tickets.length - 1}
+              </Typography>
+            </>
+          )}
+          {isLoadingMyTicket || isFetchingMyTicket || isIdleMyTicket ? (
+            <Typography variant="h2">Načítám...</Typography>
+          ) : isErrorMyTicket ? (
+            <Typography variant="h2">Chyba</Typography>
+          ) : (
+            <Ticket ticket={myTicket} serviceId={serviceId} />
+          )}
         </View>
         <TicketsTable tickets={tickets} />
       </View>
