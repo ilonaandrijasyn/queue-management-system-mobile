@@ -7,7 +7,11 @@ import { setOrganizationId } from '../../store/service/slice'
 import { type NativeStackScreenProps } from '@react-navigation/native-stack'
 import { type RootStackParamList } from '../../App'
 import { useQuery } from 'react-query'
-import { getOrganizations, type Organizations as OrganizationsType } from '../../requests/organizations'
+import {
+  getOrganizations,
+  type Organization,
+  type Organizations as OrganizationsType
+} from '../../requests/organizations'
 
 const styles = StyleSheet.create({
   container: {
@@ -31,10 +35,10 @@ export default function Organizations({ navigation }: Props) {
     <View style={styles.container}>
       <BoxList
         data={organizations}
-        onSelectItem={(id: string) => {
+        onSelectItem={(organization: Organization) => {
           // TODO maybe this is not needed if all vars are passed in props
-          dispatch(setOrganizationId(id))
-          navigation.navigate('Offices', { organizationId: id })
+          dispatch(setOrganizationId(organization.id))
+          navigation.navigate('Offices', { organizationId: organization.id, organizationName: organization.name })
         }}
       />
     </View>

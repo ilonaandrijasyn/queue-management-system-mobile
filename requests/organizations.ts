@@ -3,12 +3,14 @@ import { API_URL } from '../helpers/consts'
 import { z } from 'zod'
 import { generateError } from 'zod-error'
 
-const organizationsSchema = z.array(
-  z.object({
-    id: z.string().uuid(),
-    name: z.string()
-  })
-)
+const organizationSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string()
+})
+
+const organizationsSchema = z.array(organizationSchema)
+
+export type Organization = z.infer<typeof organizationSchema>
 
 export type Organizations = z.infer<typeof organizationsSchema>
 

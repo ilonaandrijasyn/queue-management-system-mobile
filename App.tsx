@@ -12,9 +12,9 @@ import { socket, WebsocketProvider } from './contexts/WebsocketContext'
 
 export type RootStackParamList = {
   Home: undefined
-  Offices: { organizationId: string }
-  Services: { officeId: string }
-  QueueInfo: { officeId: string; serviceId: string }
+  Offices: { organizationId: string; organizationName: string }
+  Services: { officeId: string; officeName: string }
+  QueueInfo: { officeId: string; serviceId: string; serviceName: string }
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -29,9 +29,21 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator>
               <Stack.Screen name="Home" component={Organizations} options={{ title: 'Choose organization' }} />
-              <Stack.Screen name="Offices" component={Offices} options={{ title: 'Choose office' }} />
-              <Stack.Screen name="Services" component={Services} options={{ title: 'Choose service' }} />
-              <Stack.Screen name="QueueInfo" component={QueueInfo} options={{ title: 'Queue info' }} />
+              <Stack.Screen
+                name="Offices"
+                component={Offices}
+                options={({ route }) => ({ title: route.params.organizationName })}
+              />
+              <Stack.Screen
+                name="Services"
+                component={Services}
+                options={({ route }) => ({ title: route.params.officeName })}
+              />
+              <Stack.Screen
+                name="QueueInfo"
+                component={QueueInfo}
+                options={({ route }) => ({ title: route.params.serviceName })}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </QueryClientProvider>

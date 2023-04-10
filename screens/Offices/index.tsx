@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Offices'>
 
-interface OfficesI {
+interface OfficeI {
   id: string
   name: string
 }
@@ -28,7 +28,7 @@ interface OfficesI {
 export default function Offices({ navigation, route }: Props) {
   const dispatch = useAppDispatch()
   const organizationId = route.params.organizationId
-  const [offices, setOffices] = useState<OfficesI[]>([])
+  const [offices, setOffices] = useState<OfficeI[]>([])
   useQuery('get_offices', async () => await getOffices(organizationId), {
     onSuccess: (response) => {
       setOffices(response)
@@ -39,10 +39,10 @@ export default function Offices({ navigation, route }: Props) {
     <View style={styles.container}>
       <BoxList
         data={offices}
-        onSelectItem={(id: string) => {
+        onSelectItem={(office: OfficeI) => {
           // TODO maybe this is not needed if all vars are passed in props
-          dispatch(setOfficeId(id))
-          navigation.navigate('Services', { officeId: id })
+          dispatch(setOfficeId(office.id))
+          navigation.navigate('Services', { officeId: office.id, officeName: office.name })
         }}
       />
     </View>

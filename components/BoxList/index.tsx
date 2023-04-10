@@ -3,9 +3,16 @@ import { FlatList, SafeAreaView, StatusBar, StyleSheet } from 'react-native'
 import ListBoxItem from './ListBoxItem'
 import { type ItemData } from './types'
 
-const BoxList = ({ data, onSelectItem }: { data: ItemData[]; onSelectItem: (id: string) => void }) => {
+const BoxList = ({ data, onSelectItem }: { data: ItemData[]; onSelectItem: (id: ItemData) => void }) => {
   const renderItem = ({ item }: { item: ItemData }) => {
-    return <ListBoxItem item={item} onSelect={onSelectItem} />
+    return (
+      <ListBoxItem
+        item={item}
+        onSelect={() => {
+          onSelectItem(item)
+        }}
+      />
+    )
   }
 
   return (

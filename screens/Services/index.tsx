@@ -7,7 +7,7 @@ import { type RootStackParamList } from '../../App'
 import { useAppDispatch } from '../../store/hooks'
 import { setService } from '../../store/service/slice'
 import { useQuery } from 'react-query'
-import { getServices, type Services as ServicesType } from '../../requests/services'
+import { getServices, type Service, type Services as ServicesType } from '../../requests/services'
 
 const styles = StyleSheet.create({
   container: {
@@ -35,9 +35,9 @@ export default function Services({ route, navigation }: Props) {
     <View style={styles.container}>
       <BoxList
         data={services}
-        onSelectItem={(id: string) => {
-          dispatch(setService(id))
-          navigation.navigate('QueueInfo', { officeId, serviceId: id })
+        onSelectItem={(service: Service) => {
+          dispatch(setService(service.id))
+          navigation.navigate('QueueInfo', { officeId, serviceId: service.id, serviceName: service.name })
         }}
       />
     </View>
