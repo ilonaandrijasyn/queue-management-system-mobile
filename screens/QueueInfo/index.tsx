@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import { palette } from '../../helpers/theme'
 import { type NativeStackScreenProps } from '@react-navigation/native-stack'
 import { type RootStackParamList } from '../../App'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { type Tickets, ticketSchema } from '../../types'
 import { getAllTicketsForService, getMyTicket } from '../../requests/tickets'
 import TicketsTable from '../../components/TicketsTable'
@@ -35,6 +35,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'QueueInfo'>
 export default function QueueInfo({ route }: Props) {
   const { serviceId, officeId } = route.params
   const socket = useContext(WebsocketContext)
+  const queryClient = useQueryClient()
 
   const [tickets, setTickets] = useState<Tickets>([])
 
@@ -43,6 +44,14 @@ export default function QueueInfo({ route }: Props) {
       setTickets(data)
     }
   })
+
+  const {
+    isLoading: isLoadingMyTicket,
+    isFetching: isFetchingMyTicket,
+    isError: isErrorMyTicket,
+    isIdle: isIdleMyTicket,
+    data: myTicket
+  } = useQuery('get_my_ticket', async () => await getMyTicket(serviceId))
 
   useEffect(() => {
     socket.on(`ON_UPDATE_QUEUE/${officeId}/${serviceId}`, (data: unknown) => {
@@ -54,6 +63,9 @@ export default function QueueInfo({ route }: Props) {
           return
         }
         if (ticket.state === TicketState.PROCESSING) {
+          if (myTicket?.id === ticket.id) {
+            void queryClient.invalidateQueries(['get_my_ticket'])
+          }
           setTickets((prevState) => {
             return prevState.filter((prevTicket) => prevTicket.id !== ticket.id)
           })
@@ -65,14 +77,6 @@ export default function QueueInfo({ route }: Props) {
       socket.off(`ON_UPDATE_QUEUE/${officeId}/${serviceId}`)
     }
   }, [])
-
-  const {
-    isLoading: isLoadingMyTicket,
-    isFetching: isFetchingMyTicket,
-    isError: isErrorMyTicket,
-    isIdle: isIdleMyTicket,
-    data: myTicket
-  } = useQuery('get_my_ticket', async () => await getMyTicket(serviceId))
 
   return (
     <ScrollView>
