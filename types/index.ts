@@ -17,8 +17,10 @@ export const ticketSchema = z.object({
   )
 })
 
+export type Ticket = z.infer<typeof ticketSchema>
+
 export const myTicketSchema = z.preprocess((data) => (data === '' ? null : data), z.nullable(ticketSchema))
-export type Ticket = z.infer<typeof myTicketSchema>
+export type TicketNullable = z.infer<typeof myTicketSchema>
 
 export const ticketsSchema = z.array(ticketSchema)
 

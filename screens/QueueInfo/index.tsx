@@ -78,31 +78,12 @@ export default function QueueInfo({ route }: Props) {
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.info}>
-          {myTicket === null || myTicket === undefined ? (
-            <>
-              <Typography variant="h2" otherStyles={styles.text}>
-                {'Počet čekajících:'}
-              </Typography>
-              <Typography variant="h2" otherStyles={styles.ticketsNumber}>
-                {tickets.length}
-              </Typography>
-            </>
-          ) : (
-            <>
-              <Typography variant="h2" otherStyles={styles.text}>
-                {'Lidí přede mnou:'}
-              </Typography>
-              <Typography variant="h2" otherStyles={styles.ticketsNumber}>
-                {tickets.length - 1}
-              </Typography>
-            </>
-          )}
           {isLoadingMyTicket || isFetchingMyTicket || isIdleMyTicket ? (
             <Typography variant="h2">Načítám...</Typography>
           ) : isErrorMyTicket ? (
             <Typography variant="h2">Chyba</Typography>
           ) : (
-            <Ticket ticket={myTicket} serviceId={serviceId} />
+            <Ticket ticket={myTicket} ticketsNum={tickets.length} serviceId={serviceId} />
           )}
         </View>
         <TicketsTable tickets={tickets} />

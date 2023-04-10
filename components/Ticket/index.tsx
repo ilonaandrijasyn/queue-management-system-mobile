@@ -1,30 +1,28 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import Typography from '../Typography'
-import GenerateTicketButton from '../GenerateTicketButton'
-import { type Ticket as TicketType } from '../../types'
-
-const styles = StyleSheet.create({
-  ticketId: {
-    marginTop: 8,
-    fontWeight: 'bold'
-  }
-})
+import { type TicketNullable as TicketType } from '../../types'
+import { TicketState } from '../../helpers/consts'
+import TicketProcessingAlert from '../TicketProcessingAlert'
+import NoTicketContent from './NoTicketContent'
+import TicketCreatedContent from './TicketCreatedContent'
 
 interface TicketProps {
   ticket: TicketType
+  ticketsNum: number
   serviceId: string
 }
 
-export default function Ticket({ ticket, serviceId }: TicketProps) {
-  return ticket === null ? (
-    <GenerateTicketButton serviceId={serviceId} />
-  ) : (
-    <View>
-      <Typography variant="h2">{'Můj lístek:'}</Typography>
-      <Typography variant="h2" otherStyles={styles.ticketId}>
-        {ticket.ticketNumber}
-      </Typography>
-    </View>
-  )
+export default function Ticket({ ticket, ticketsNum, serviceId }: TicketProps) {
+  if (ticket === null) {
+    return <NoTicketContent ticketsNum={ticketsNum} serviceId={serviceId} />
+  }
+
+  if (ticket.state === TicketState.CREATED) {
+    return <TicketCreatedContent ticketsNum={ticketsNum - 1} ticket={ticket} />
+  }
+
+  if (ticket.state === TicketState.PROCESSING && ticket.counter !== null) {
+    return <TicketProcessingAlert ticketNumber={ticket.ticketNumber} counterName={ticket.counter?.name} />
+  }
+
+  return null
 }
