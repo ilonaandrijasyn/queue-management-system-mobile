@@ -1,6 +1,6 @@
 import React from 'react'
 import Typography from '../Typography'
-import GenerateTicketButton from '../GenerateTicketButton'
+import GenerateTicketButton from './GenerateTicketButton'
 import { styles } from './styles'
 
 interface NoTicketContentProps {

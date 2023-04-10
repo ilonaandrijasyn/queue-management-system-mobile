@@ -1,10 +1,10 @@
 import React from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { createTicket, getMyTicketsCount } from '../requests/tickets'
-import Button from './Button'
-import Typography from './Typography'
+import { createTicket, getMyTicketsCount } from '../../requests/tickets'
+import Button from '../Button'
+import Typography from '../Typography'
 import { StyleSheet, View } from 'react-native'
-import { palette } from '../helpers/theme'
+import { palette } from '../../helpers/theme'
 
 const styles = StyleSheet.create({
   limitError: {
