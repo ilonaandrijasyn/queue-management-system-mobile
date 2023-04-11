@@ -25,7 +25,7 @@ export default function GenerateTicketButton({ serviceId }: TicketProps) {
 
   const mutationCreateTicket = useMutation('generate_ticket', createTicket, {
     onSuccess: async () => {
-      await queryClient.invalidateQueries(['get_my_ticket'])
+      await queryClient.invalidateQueries([`get_my_ticket/${serviceId}`])
     }
   })
 

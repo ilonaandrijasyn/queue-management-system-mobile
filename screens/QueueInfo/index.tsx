@@ -11,6 +11,7 @@ import { WebsocketContext } from '../../contexts/WebsocketContext'
 import { TicketState } from '../../helpers/consts'
 import Ticket from '../../components/Ticket'
 import Typography from '../../components/Typography'
+import { z } from 'zod'
 
 const styles = StyleSheet.create({
   container: {
@@ -30,10 +31,12 @@ const styles = StyleSheet.create({
   }
 })
 
+export const ticketIdSchema = z.string().uuid()
+
 type Props = NativeStackScreenProps<RootStackParamList, 'QueueInfo'>
 
 export default function QueueInfo({ route }: Props) {
-  const { serviceId, officeId } = route.params
+  const { serviceId } = route.params
   const socket = useContext(WebsocketContext)
   const queryClient = useQueryClient()
 
@@ -51,10 +54,10 @@ export default function QueueInfo({ route }: Props) {
     isError: isErrorMyTicket,
     isIdle: isIdleMyTicket,
     data: myTicket
-  } = useQuery('get_my_ticket', async () => await getMyTicket(serviceId))
+  } = useQuery(`get_my_ticket/${serviceId}`, async () => await getMyTicket(serviceId))
 
   useEffect(() => {
-    socket.on(`ON_UPDATE_QUEUE/${officeId}/${serviceId}`, (data: unknown) => {
+    socket.on(`ON_UPDATE_QUEUE/${serviceId}`, (data: unknown) => {
       const parserResponse = ticketSchema.safeParse(data)
       if (parserResponse.success) {
         const ticket = parserResponse.data
@@ -64,19 +67,38 @@ export default function QueueInfo({ route }: Props) {
         }
         if (ticket.state === TicketState.PROCESSING) {
           if (myTicket?.id === ticket.id) {
-            void queryClient.invalidateQueries(['get_my_ticket'])
+            void queryClient.invalidateQueries([`get_my_ticket/${serviceId}`])
           }
           setTickets((prevState) => {
-            return prevState.filter((prevTicket) => prevTicket.id !== ticket.id)
+            return prevState.map((prevTicket) => {
+              if (prevTicket.id === ticket.id) {
+                return ticket
+              }
+              return prevTicket
+            })
           })
         }
       }
     })
 
+    socket.on(`ON_DONE_TICKET/${serviceId}`, (data: unknown) => {
+      const parserResponse = ticketIdSchema.safeParse(data)
+      if (parserResponse.success) {
+        const ticketId = parserResponse.data
+        if (myTicket?.id === ticketId) {
+          void queryClient.invalidateQueries([`get_my_ticket/${serviceId}`])
+        }
+        setTickets((prevState) => {
+          return prevState.filter((prevTicket) => prevTicket.id !== ticketId)
+        })
+      }
+    })
+
     return () => {
-      socket.off(`ON_UPDATE_QUEUE/${officeId}/${serviceId}`)
+      socket.off(`ON_UPDATE_QUEUE/${serviceId}`)
+      socket.off(`ON_DONE_TICKET/${serviceId}`)
     }
-  }, [])
+  }, [serviceId, myTicket?.id])
 
   return (
     <ScrollView>

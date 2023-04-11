@@ -33,7 +33,7 @@ export default function Services({ route, navigation }: Props) {
       <BoxList
         data={services}
         onSelectItem={(service: Service) => {
-          navigation.navigate('QueueInfo', { officeId, serviceId: service.id, serviceName: service.name })
+          navigation.navigate('QueueInfo', { serviceId: service.id, serviceName: service.name })
         }}
       />
     </View>

@@ -12,7 +12,7 @@ export type RootStackParamList = {
   Home: undefined
   Offices: { organizationId: string; organizationName: string }
   Services: { officeId: string; officeName: string }
-  QueueInfo: { officeId: string; serviceId: string; serviceName: string }
+  QueueInfo: { serviceId: string; serviceName: string }
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
