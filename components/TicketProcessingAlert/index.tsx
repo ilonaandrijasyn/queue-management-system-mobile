@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderRadius: 16,
     width: '100%',
-    backgroundColor: palette.gov.blue.inactive2
+    backgroundColor: palette.blue.light
   }
 })
 

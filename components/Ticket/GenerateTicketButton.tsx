@@ -8,7 +8,7 @@ import { palette } from '../../helpers/theme'
 
 const styles = StyleSheet.create({
   limitError: {
-    color: palette.gov.error.main,
+    color: palette.error.main,
     fontWeight: 'bold',
     marginBottom: 8
   }

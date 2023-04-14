@@ -14,7 +14,7 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: palette.gov.blue.dark,
+    backgroundColor: palette.blue.main,
     alignItems: 'center',
     justifyContent: 'center'
   }

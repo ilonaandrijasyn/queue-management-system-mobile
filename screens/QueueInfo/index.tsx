@@ -16,7 +16,7 @@ import { z } from 'zod'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: palette.gov.grey.background
+    backgroundColor: palette.grey.background
   },
   info: {
     paddingLeft: 24,

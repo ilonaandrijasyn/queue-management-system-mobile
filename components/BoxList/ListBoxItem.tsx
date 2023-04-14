@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
-    backgroundColor: palette.gov.yellow.main,
+    backgroundColor: palette.yellow.main,
     borderRadius: 8
   },
   title: {
-    color: palette.gov.grey.dark
+    color: palette.grey.dark
   }
 })
 

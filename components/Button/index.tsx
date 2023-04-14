@@ -9,11 +9,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flex: 1,
     alignItems: 'center',
-    backgroundColor: palette.gov.yellow.main
+    backgroundColor: palette.yellow.main
   },
   text: {
     fontSize: 36,
-    color: palette.gov.grey.dark
+    color: palette.grey.dark
   },
   disabled: {
     opacity: 0.5
