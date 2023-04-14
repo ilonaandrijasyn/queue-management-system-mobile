@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 20,
-    marginVertical: 8,
+    marginVertical: 16,
     marginHorizontal: 16,
-    backgroundColor: palette.yellow.main,
+    backgroundColor: 'white',
     borderRadius: 8
   },
   title: {
