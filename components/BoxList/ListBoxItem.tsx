@@ -10,11 +10,15 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight ?? 0
   },
   item: {
-    padding: 20,
+    padding: 16,
     marginVertical: 16,
     marginHorizontal: 16,
-    backgroundColor: 'white',
-    borderRadius: 8
+    backgroundColor: palette.yellow.main,
+    shadowColor: palette.grey.dark,
+    shadowOffset: { width: -2, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    borderRadius: 10
   },
   title: {
     color: palette.grey.dark

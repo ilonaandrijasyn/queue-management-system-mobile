@@ -1,20 +1,11 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { palette } from '../../helpers/theme'
+import { View } from 'react-native'
 import BoxList from '../../components/BoxList'
 import { type NativeStackScreenProps } from '@react-navigation/native-stack'
 import { type RootStackParamList } from '../../App'
 import { useQuery } from 'react-query'
 import { getOffices } from '../../requests/offices'
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: palette.blue.main,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})
+import { commonStyles } from '../../helpers/commonStyles'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Offices'>
 
@@ -33,7 +24,7 @@ export default function Offices({ navigation, route }: Props) {
   })
 
   return (
-    <View style={styles.container}>
+    <View style={commonStyles.page}>
       <BoxList
         data={offices}
         onSelectItem={(office: OfficeI) => {

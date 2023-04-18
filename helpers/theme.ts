@@ -1,10 +1,9 @@
 export const palette = {
   blue: {
-    light: '#e5eaf6',
-    main: '#1c5db9'
+    light: '#e5eaf6'
   },
   yellow: {
-    main: '#FFA62B'
+    main: '#edbb42'
   },
   error: {
     main: '#d32f2f'
