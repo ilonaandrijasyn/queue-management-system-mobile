@@ -25,7 +25,7 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Home" component={Organizations} options={{ title: 'Choose organization' }} />
+            <Stack.Screen name="Home" component={Organizations} options={{ title: 'Zvolte organizaci' }} />
             <Stack.Screen
               name="Offices"
               component={Offices}
