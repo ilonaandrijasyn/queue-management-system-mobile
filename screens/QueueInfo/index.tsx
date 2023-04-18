@@ -36,7 +36,7 @@ export const ticketIdSchema = z.string().uuid()
 type Props = NativeStackScreenProps<RootStackParamList, 'QueueInfo'>
 
 export default function QueueInfo({ route }: Props) {
-  const { serviceId } = route.params
+  const { officeId, serviceId } = route.params
   const socket = useContext(WebsocketContext)
   const queryClient = useQueryClient()
 
@@ -57,6 +57,20 @@ export default function QueueInfo({ route }: Props) {
   } = useQuery(`get_my_ticket/${serviceId}`, async () => await getMyTicket(serviceId))
 
   useEffect(() => {
+    socket.on(`ON_DELETE_TICKETS/${officeId}`, (data: unknown) => {
+      const parserResponse = z.array(ticketSchema).safeParse(data)
+      if (parserResponse.success) {
+        const tickets = parserResponse.data
+        const isMyTicket = tickets.some((ticket) => ticket.id === myTicket?.id)
+        if (isMyTicket) {
+          void queryClient.invalidateQueries([`get_my_ticket/${serviceId}`])
+        }
+        setTickets((prevState) => {
+          return prevState.filter((prevTicket) => !tickets.some((removedTicket) => prevTicket.id === removedTicket.id))
+        })
+      }
+    })
+
     socket.on(`ON_UPDATE_QUEUE/${serviceId}`, (data: unknown) => {
       const parserResponse = ticketSchema.safeParse(data)
       if (parserResponse.success) {
@@ -95,6 +109,7 @@ export default function QueueInfo({ route }: Props) {
     })
 
     return () => {
+      socket.off(`ON_DELETE_TICKETS/${officeId}`)
       socket.off(`ON_UPDATE_QUEUE/${serviceId}`)
       socket.off(`ON_DONE_TICKET/${serviceId}`)
     }
