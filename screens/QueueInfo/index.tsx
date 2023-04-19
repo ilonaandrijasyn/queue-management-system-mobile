@@ -12,6 +12,7 @@ import { TicketState } from '../../helpers/consts'
 import Ticket from '../../components/Ticket'
 import Typography from '../../components/Typography'
 import { z } from 'zod'
+import { NoPhoneId } from '../../exceptions'
 
 const styles = StyleSheet.create({
   container: {
@@ -28,6 +29,12 @@ const styles = StyleSheet.create({
   ticketsNumber: {
     fontWeight: 'bold',
     marginBottom: 48
+  },
+  stateText: {
+    marginTop: 16
+  },
+  error: {
+    color: palette.error.main
   }
 })
 
@@ -52,6 +59,7 @@ export default function QueueInfo({ route }: Props) {
     isLoading: isLoadingMyTicket,
     isFetching: isFetchingMyTicket,
     isError: isErrorMyTicket,
+    error: errorMyTicket,
     isIdle: isIdleMyTicket,
     data: myTicket
   } = useQuery(`get_my_ticket/${serviceId}`, async () => await getMyTicket(serviceId))
@@ -122,14 +130,25 @@ export default function QueueInfo({ route }: Props) {
     return tickets.filter((t) => t.dateCreated <= myTicket.dateCreated).length - 1
   }
 
+  const errorMessage =
+    errorMyTicket instanceof NoPhoneId ? (
+      <Typography variant="h2" otherStyles={{ ...styles.error, ...styles.stateText }}>
+        Nepovedlo se načíst ID telefonu. Zkuste provést restart aplikace.
+      </Typography>
+    ) : (
+      <Typography variant="h2">Chyba</Typography>
+    )
+
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.info}>
           {isLoadingMyTicket || isFetchingMyTicket || isIdleMyTicket ? (
-            <Typography variant="h2">Načítám...</Typography>
+            <Typography variant="h2" otherStyles={styles.stateText}>
+              Načítám...
+            </Typography>
           ) : isErrorMyTicket ? (
-            <Typography variant="h2">Chyba</Typography>
+            errorMessage
           ) : (
             <Ticket
               ticket={myTicket}

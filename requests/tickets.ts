@@ -3,6 +3,7 @@ import { myTicketSchema, ticketsSchema } from '../types'
 import { generateError } from 'zod-error'
 import { getPhoneId } from '../helpers/device'
 import { z } from 'zod'
+import { NoPhoneId } from '../exceptions'
 
 export const getAllTicketsForService = async (serviceId: string) => {
   const response = await axiosInstance.get(`tickets/service/${serviceId}`)
@@ -18,7 +19,7 @@ export const getAllTicketsForService = async (serviceId: string) => {
 export const getMyTicket = async (serviceId: string) => {
   const phoneId = await getPhoneId()
   if (phoneId === null) {
-    throw new Error('no phone id')
+    throw new NoPhoneId()
   }
   const response = await axiosInstance.get(`tickets/service/${serviceId}/device/${phoneId}`)
   const parsedResponse = myTicketSchema.safeParse(response.data)
@@ -33,7 +34,7 @@ export const getMyTicket = async (serviceId: string) => {
 export const createTicket = async (serviceId: string) => {
   const phoneId = await getPhoneId()
   if (phoneId === null) {
-    throw new Error('no phone id')
+    throw new NoPhoneId()
   }
   return await axiosInstance.post('tickets/create', { serviceId, phoneId })
 }
@@ -41,7 +42,7 @@ export const createTicket = async (serviceId: string) => {
 export const getMyTicketsCount = async () => {
   const phoneId = await getPhoneId()
   if (phoneId === null) {
-    throw new Error('no phone id')
+    throw new NoPhoneId()
   }
   const response = await axiosInstance.get(`tickets/device/${phoneId}`)
   const parsedResponse = z.number().safeParse(response.data)
