@@ -115,6 +115,13 @@ export default function QueueInfo({ route }: Props) {
     }
   }, [serviceId, myTicket?.id])
 
+  const getTicketsBeforeMe = () => {
+    if (myTicket === undefined || myTicket === null) {
+      return tickets.length
+    }
+    return tickets.filter((t) => t.dateCreated >= myTicket.dateCreated).length - 1
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -124,7 +131,12 @@ export default function QueueInfo({ route }: Props) {
           ) : isErrorMyTicket ? (
             <Typography variant="h2">Chyba</Typography>
           ) : (
-            <Ticket ticket={myTicket} ticketsNum={tickets.length} serviceId={serviceId} />
+            <Ticket
+              ticket={myTicket}
+              ticketsNum={getTicketsBeforeMe()}
+              ticketsBeforeMe={getTicketsBeforeMe()}
+              serviceId={serviceId}
+            />
           )}
         </View>
         <TicketsTable tickets={tickets} />

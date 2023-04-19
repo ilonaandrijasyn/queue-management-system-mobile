@@ -4,6 +4,7 @@ import { TicketState } from '../helpers/consts'
 export const ticketSchema = z.object({
   id: z.string().uuid(),
   ticketNumber: z.number(),
+  dateCreated: z.string().datetime({ offset: true }),
   service: z.object({
     id: z.string().uuid(),
     name: z.string()
