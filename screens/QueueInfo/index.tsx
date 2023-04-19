@@ -119,7 +119,7 @@ export default function QueueInfo({ route }: Props) {
     if (myTicket === undefined || myTicket === null) {
       return tickets.length
     }
-    return tickets.filter((t) => t.dateCreated >= myTicket.dateCreated).length - 1
+    return tickets.filter((t) => t.dateCreated <= myTicket.dateCreated).length - 1
   }
 
   return (
