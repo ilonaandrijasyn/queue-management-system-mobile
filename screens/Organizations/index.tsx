@@ -15,18 +15,22 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
 
 export default function Organizations({ navigation }: Props) {
   const [organizations, setOrganizations] = useState<OrganizationsType>([])
-  useQuery('get_organizations', async () => await getOrganizations(), {
+  const { isError } = useQuery('get_organizations', async () => await getOrganizations(), {
     onSuccess: setOrganizations
   })
 
   return (
     <View style={commonStyles.page}>
-      <BoxList
-        data={organizations}
-        onSelectItem={(organization: Organization) => {
-          navigation.navigate('Offices', { organizationId: organization.id, organizationName: organization.name })
-        }}
-      />
+      {isError ? (
+        'Nepodařilo se načíst organizace'
+      ) : (
+        <BoxList
+          data={organizations}
+          onSelectItem={(organization: Organization) => {
+            navigation.navigate('Offices', { organizationId: organization.id, organizationName: organization.name })
+          }}
+        />
+      )}
     </View>
   )
 }
