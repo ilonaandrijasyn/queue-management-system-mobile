@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { API_URL } from '../helpers/consts'
 
 export const axiosInstance = axios.create({
-  baseURL: 'http://192.168.0.172:3000',
+  baseURL: API_URL,
   timeout: 1000
 })

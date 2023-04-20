@@ -1,5 +1,4 @@
 import { axiosInstance } from '../config/axios'
-import { API_URL } from '../helpers/consts'
 import { z } from 'zod'
 import { generateError } from 'zod-error'
 
@@ -15,7 +14,7 @@ export type Organization = z.infer<typeof organizationSchema>
 export type Organizations = z.infer<typeof organizationsSchema>
 
 export const getOrganizations = async () => {
-  const response = await axiosInstance.get(API_URL.ORGANIZATIONS)
+  const response = await axiosInstance.get('/organizations')
   const parsedResponse = organizationsSchema.safeParse(response.data)
   if (!parsedResponse.success) {
     const e = generateError(parsedResponse.error)

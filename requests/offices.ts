@@ -1,5 +1,4 @@
 import { axiosInstance } from '../config/axios'
-import { API_URL } from '../helpers/consts'
 import { z } from 'zod'
 import { getOfficeAddress } from '../helpers/offices'
 import { generateError } from 'zod-error'
@@ -20,7 +19,7 @@ export type Office = z.infer<typeof officeSchema>
 export type Offices = z.infer<typeof officesSchema>
 
 export const getOffices = async (organizationId: string) => {
-  const response = await axiosInstance.get(`${API_URL.ORGANIZATIONS}/${organizationId}${API_URL.OFFICES}`)
+  const response = await axiosInstance.get(`/organizations/${organizationId}/offices`)
   const parsedResponse = officesSchema.safeParse(response.data)
   if (!parsedResponse.success) {
     const e = generateError(parsedResponse.error)

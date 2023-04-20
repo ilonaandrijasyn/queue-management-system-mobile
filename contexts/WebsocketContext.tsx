@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import { io, type Socket } from 'socket.io-client'
+import { API_URL } from '../helpers/consts'
 
-// TODO maybe export base url to const
-export const socket = io('http://localhost:3000')
+export const socket = io(API_URL)
 export const WebsocketContext = createContext<Socket>(socket)
 export const WebsocketProvider = WebsocketContext.Provider
