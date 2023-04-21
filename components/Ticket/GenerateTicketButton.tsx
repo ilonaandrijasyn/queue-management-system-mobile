@@ -33,7 +33,7 @@ export default function GenerateTicketButton({ serviceId }: TicketProps) {
     mutationCreateTicket.mutate(serviceId)
   }
 
-  const reachedLimit = data === 5
+  const reachedLimit = data !== undefined && data >= 5
 
   return (
     <View>
