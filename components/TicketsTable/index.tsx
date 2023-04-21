@@ -2,6 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'
 import { type Tickets } from '../../types'
+import Typography from '../Typography'
 
 const styles = StyleSheet.create({
   container: {
@@ -10,6 +11,9 @@ const styles = StyleSheet.create({
     paddingBottom: 120,
     paddingHorizontal: 8,
     width: '100%'
+  },
+  title: {
+    textAlign: 'center'
   },
   head: {
     height: 44,
@@ -24,6 +28,9 @@ const styles = StyleSheet.create({
 const TicketsTable = ({ tickets }: { tickets: Tickets }) => {
   return (
     <View style={styles.container}>
+      <Typography variant="h2" otherStyles={styles.title}>
+        Aktuální fronta
+      </Typography>
       <DataTable>
         <DataTable.Header style={styles.head}>
           <DataTable.Title>Číslo</DataTable.Title>
