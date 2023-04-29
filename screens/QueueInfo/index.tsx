@@ -136,7 +136,7 @@ export default function QueueInfo({ route }: Props) {
         Nepovedlo se načíst ID telefonu. Zkuste provést restart aplikace.
       </Typography>
     ) : (
-      <Typography variant="h2">Chyba</Typography>
+      <Typography variant="h2">Nepovedlo se načíst data o vašem lístku. Zkuste to prosím později.</Typography>
     )
 
   return (
