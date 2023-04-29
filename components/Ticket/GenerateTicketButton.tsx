@@ -33,6 +33,16 @@ export default function GenerateTicketButton({ serviceId }: TicketProps) {
     mutationCreateTicket.mutate(serviceId)
   }
 
+  if (mutationCreateTicket.isError) {
+    return (
+      <View>
+        <Typography variant="body" otherStyles={styles.limitError}>
+          Nepovedlo se vygenerovat lístek. Zkuste to prosím později.
+        </Typography>
+      </View>
+    )
+  }
+
   const reachedLimit = data !== undefined && data >= 5
 
   return (
