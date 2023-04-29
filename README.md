@@ -22,7 +22,10 @@ react-native-debugger --no-sanbox
 You can enable network by right-clicking the mouse and choosing "Enable network inspect".
 
 ## Build
-Build can be done with EAS build.
+Build can be done with EAS build. Beware that API URL is localhost:3000.
+It will work in dev mode with Expo GO, because Expo creates a bridge between
+a phone and pc. But build version needs to have API URL changes to the IP of
+pc where server runs. You can change it in **./helpers/consts.ts**.
 
 First install EAS CLI.
 
